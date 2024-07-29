@@ -14,7 +14,9 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={lexend.className}>
         <Header />
-        {children}
+        <div className="container">
+          {children}
+        </div>
       </body>
     </html>
   );
