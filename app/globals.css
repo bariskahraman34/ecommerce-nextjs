@@ -5,7 +5,6 @@
 }
 
 body{
-  font-family: 'Kumbh Sans', sans-serif;
   background-color: rgba(255, 255, 255, 1);
 }
 
@@ -207,17 +206,20 @@ a{
 }
 
 .product-info-area .ratings{
+  position: relative;
   display: flex;
+  gap: 2px;
+  height: 14px;
 }
 
 
 /* Product Page Styling */
 
 .product-container{
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: repeat(2,1fr);
   align-items: center;
-  gap: 125px;
+  justify-items: center;
 }
 
 .product-left-side-container{
@@ -242,7 +244,7 @@ a{
   display: flex;
   justify-content: flex-start;
   flex-wrap: wrap;
-  gap: 31px;
+  gap: 30px;
   margin-top: 32px;
 }
 
@@ -342,8 +344,19 @@ a{
   text-align: center;
 }
 
-.fa-solid.fa-star{
-  color: #FF7E1B;
+
+.empty .star{
+  background: url(https://cdn.dsmcdn.com/web/production/rating-and-review-small-star-grey.svg) no-repeat center;
+}
+
+.full .star{
+  background: url(https://cdn.dsmcdn.com/web/production/rating-and-review-small-star-orange.svg) no-repeat center;
+}
+
+.star{
+  width: 14px;
+  height: 14px;
+  transform: scale(.85);
 }
 
 /* Basket Result */
@@ -480,11 +493,42 @@ dialog{
   top: 50%;
   left: 50%;
   transform: translate(-50%,-50%);
-  width: 400px;
   border-radius: 8px;
   border: none;
   padding: 30px;
+  overflow: visible;
 }
+
+.dialog-open{
+  animation: opacityAndScale 1s ease;
+}
+
+.dialog-closed{
+  animation: reverseOpacityAndScale 1s ease;
+}
+
+@keyframes reverseOpacityAndScale{
+  0%{
+    transform: translate(-50%,-50%) scale(1);
+    opacity: 1;
+  }
+  100%{
+    transform: translate(-50%,-50%) scale(0);
+    opacity: 0;
+  }
+}
+
+@keyframes opacityAndScale{
+  0%{
+    transform: translate(-50%,-50%) scale(0);
+    opacity: 0;
+  }
+  100%{
+    transform: translate(-50%,-50%) scale(1);
+    opacity: 1;
+  }
+}
+
 
 dialog .big-image-container{
   width: 400px !important;
@@ -610,17 +654,17 @@ dialog p{
   background-color: transparent;
   border: none;
   display: flex;
-  width: 550px;
+  width: 650px;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   overflow: visible;
+  position: relative;
 }
 
 .slider .big-image-container{
   width: 550px;
   height: 550px;
-  position: relative;
 }
 
 .slider .big-image-container .big-image{
@@ -640,9 +684,12 @@ dialog:focus-visible{
 .slider .slider-xmark{
   position: absolute;
   cursor: pointer;
-  top: 0px;
-  right: 0px;
-  color: #fff;
+  top: -40px;
+  right: -40px;
+  color: rgb(30, 48, 80);
+  background-color: #fff;
+  border-radius: 50%;
+
   font-size: 32px;
   transition: color .2s ease;
 }
@@ -652,15 +699,18 @@ dialog:focus-visible{
 }
 
 .slider .fa-chevron-right{
-  right: -60px;
+  right: 0px;
 }
 
 .slider .fa-chevron-left{
-  left: -60px;
+  left: 0px;
 }
 
 .slider .fa-chevron-left,
 .slider .fa-chevron-right{
+  user-select: none;
+  z-index: 999;
+  font-size: 10px;
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
@@ -670,11 +720,26 @@ dialog:focus-visible{
   cursor: pointer;
   transition: color .2s ease;
   font-size: 20px;
+  border: 1px solid #000;
 }
 
 .slider .fa-chevron-left:hover,
 .slider .fa-chevron-right:hover{
   color: #FF7E1B;
+  border-color: #FF7E1B;
+}
+
+.current-dialog-image{
+  animation: opacity .5s ease;
+}
+
+@keyframes opacity{
+  0%{
+    opacity: 0;
+  }
+  100%{
+    opacity: 1;
+  }
 }
 
 /* Update and Delete Buttons Styling */
@@ -745,4 +810,9 @@ dialog:focus-visible{
   border-radius: 10px;
   height: 100%;
   width: 100%;
+}
+
+.quantity-btn-disabled{
+  pointer-events: none;
+  color: rgb(216, 216, 216) !important;
 }
