@@ -373,13 +373,22 @@ a{
   width: 360px;
   border-radius: 8px;
   z-index: 999;
-  transition: 1s;
   opacity: 0;
+  transition: all .5s ease;
+}
+
+@keyframes basketShow{
+  0%{
+    opacity: 0;
+  }100%{
+    opacity: 1;
+  }
 }
 
 .basket-result.show{
+  animation: basketShow .5s ease;
   opacity:1;
-  right: 0;
+  right:0;
 }
 
 .cart-header{
@@ -500,11 +509,11 @@ dialog{
 }
 
 .dialog-open{
-  animation: opacityAndScale 1s ease;
+  animation: opacityAndScale .5s ease;
 }
 
 .dialog-closed{
-  animation: reverseOpacityAndScale 1s ease;
+  animation: reverseOpacityAndScale .5s ease;
 }
 
 @keyframes reverseOpacityAndScale{
@@ -572,7 +581,8 @@ dialog p{
 }
 
 .big-btn:hover,
-.checkout-btn:hover{
+.checkout-btn:hover,
+.form-container button:hover{
   background: rgba(255, 171, 106, 1);
 }
 
@@ -815,4 +825,97 @@ dialog:focus-visible{
 .quantity-btn-disabled{
   pointer-events: none;
   color: rgb(216, 216, 216) !important;
+}
+
+/* Form css */
+.products-page-container{
+  position: relative;
+  display: grid;
+  align-items: start;
+  grid-template-columns: 1fr 5fr;
+  gap: 20px;
+}
+
+.form-container{
+  position: sticky;
+  top: 20px;
+  left: 0;
+  border: 1px solid #FF7E1B;
+  border-radius: 20px;
+  padding: 20px;
+  form{
+    display: grid;
+    grid-template-columns: repeat(1,1fr);
+    gap: 20px;
+    & > div{
+      display: grid;
+      grid-template-columns: repeat(1,1fr);
+      gap: 10px;
+      span{
+        font-weight: bold;
+      }
+    }
+    .category-container{
+      select{
+        padding: 5px;
+      }
+    }
+    .price-container{
+      .input-container{
+        display: grid;
+        grid-template-columns: repeat(3,1fr);
+        place-items: center;
+        gap: 0px;
+        input{
+          padding: 5px;
+          width: 45px;
+          font-size: 10px;
+        }
+      }
+    }
+    .search-container{
+      input{
+        padding: 5px;
+      }
+    }
+    button{
+      background-color: #FF7E1B;
+      color: #fff;
+      padding: 10px 20px;
+      border: none;
+      cursor: pointer;
+      font-weight: 700;
+      transition: all .3s ease;
+    }
+  }
+}
+
+.products-loaded{
+  animation: downAndUp .3s ease;
+}
+
+.products-removed{
+  animation: upAndDown .3s ease;
+}
+
+@keyframes upAndDown{
+  0%{
+    opacity: 1;
+    transform: translateY(0px);
+  }
+  100%{
+    opacity: 0;
+    transform: translateY(150px);
+  }
+}
+
+@keyframes downAndUp{
+  0%{
+    opacity: 0;
+    transform: translateY(150px);
+  }
+  100%{
+    opacity: 1;
+    transform: translateY(0px);
+  }
 }
