@@ -1,11 +1,11 @@
 "use client"
 
-import Ratings from "@/components/Ratings";
+import Ratings from "./Ratings";
 import Image from "next/image";
 import Link from "next/link";
 import { useState,useEffect, useRef } from "react";
 import { useSearchParams } from "next/navigation";
-import formFilter from "@/actions/filterProducts";
+import formFilter from "../actions/filterProducts";
 
 export default function ListProducts({products}){
   const searchParams = useSearchParams();

@@ -1,6 +1,6 @@
 import { Kumbh_Sans } from "next/font/google";
 import "./globals.css";
-import Header from "@/components/Header";
+import Header from "../components/Header";
 
 const kumbhSans = Kumbh_Sans({ subsets: ["latin"] });
 

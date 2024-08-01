@@ -1,4 +1,4 @@
-import ListProducts from "@/components/ListProducts";
+import ListProducts from "../../components/ListProducts";
 
 
 export default async function ProductsPage(){
