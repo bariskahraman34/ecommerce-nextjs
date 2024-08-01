@@ -16,6 +16,10 @@ export default function Product({product}) {
   const dialogRef = useRef();
   const imageRef = useRef();
 
+  const handleClick = e => {
+    e.preventDefault();
+  }
+
   useEffect(() => {
     imageRef.current.classList.add('current-dialog-image');
     setTimeout(() => {
@@ -26,7 +30,7 @@ export default function Product({product}) {
   function toggleDialog() {
     if(!dialogRef.current) return;
     dialogRef.current.hasAttribute('open')
-    ? (setTimeout(() => {(dialogRef.current.close(), dialogRef.current.classList.remove('dialog-closed'))},1000), dialogRef.current.classList.remove('dialog-open'), dialogRef.current.classList.add('dialog-closed'))
+    ? (setTimeout(() => {(dialogRef.current.close(), dialogRef.current.classList.remove('dialog-closed'))},450), dialogRef.current.classList.remove('dialog-open'), dialogRef.current.classList.add('dialog-closed'))
     : (dialogRef.current.showModal(),dialogRef.current.classList.add('dialog-open'));
   }
 
@@ -46,7 +50,14 @@ export default function Product({product}) {
           <dialog ref={dialogRef}>
             <div className="slider">
               <FontAwesomeIcon icon={faCircleXmark} className='slider-xmark' onClick={toggleDialog} />
-              <FontAwesomeIcon icon={faChevronLeft} style={{display:`${imageIndex == 0 ? "none" : "block"}`}} onClick={() => { if(imageIndex > 0 ) { setBigImage(product.images[imageIndex - 1]); setImageIndex(imageIndex - 1)} } } />
+              {
+                imageIndex !== 0 && (
+                  <FontAwesomeIcon 
+                  icon={faChevronLeft} 
+                  onClick={() => { if(imageIndex > 0 ) { setBigImage(product.images[imageIndex - 1]); setImageIndex(imageIndex - 1)} } } 
+                  />
+                )
+              }
               <div className="big-image-container">
                   <Image className="big-image" ref={imageRef} width={300} height={300} src={`${bigImage ? bigImage : product.thumbnail}`} alt="" />
               </div>
@@ -57,7 +68,15 @@ export default function Product({product}) {
                   ))
                 }
               </div>
-            <FontAwesomeIcon icon={faChevronRight} style={{display:`${imageIndex == product.images.length - 1 ? "none" : "block"}`}} onClick={() => { if(imageIndex != product.images.length - 1 ) { setBigImage(product.images[imageIndex + 1]); setImageIndex(imageIndex + 1) } } } />
+              {
+                imageIndex !== product.images.length - 1 && (
+                  <FontAwesomeIcon 
+                  icon={faChevronRight} 
+                  onClick={() => { if(imageIndex != product.images.length - 1 ) { setBigImage(product.images[imageIndex + 1]); setImageIndex(imageIndex + 1) } } } 
+                  /> 
+                )
+              }
+            
             </div>
           </dialog>
       </div>
@@ -76,9 +95,9 @@ export default function Product({product}) {
           </div>
           <div className="add-card-container">
               <div className="quantity-container">
-                  <a href="#" className={`quantity-btn quantity-down ${quantity === 0 && "quantity-btn-disabled"}`} onClick={() => quantity > 0 && setQuantity(quantity - 1)}>-</a>
+                  <a href="#" className={`quantity-btn quantity-down ${quantity === 0 && "quantity-btn-disabled"}`} onClick={(e) => (quantity > 0 && setQuantity(quantity - 1), handleClick(e))}>-</a>
                   <strong className="quantity-content">{quantity}</strong>
-                  <a href="#" className={`quantity-btn quantity-up ${quantity === product.stock && "quantity-btn-disabled"}`} onClick={() => setQuantity(quantity + 1)}>+</a>
+                  <a href="#" className={`quantity-btn quantity-up ${quantity === product.stock && "quantity-btn-disabled"}`} onClick={(e) => (quantity !== product.stock && setQuantity(quantity + 1), handleClick(e))}>+</a>
               </div>
               <button className="big-btn">
                   <Image width={20} height={20} src="/icons/basket-white.svg" alt="" />
